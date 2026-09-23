@@ -1,12 +1,16 @@
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const defaultSupabaseUrl = "https://ciqpijerujseknxdlwog.supabase.co";
+const defaultSupabaseKey =
+  "sb_publishable_Y4jB2Vtz-xH6F8mi0JoNXg_BPHFNCec";
 
-if (!supabaseUrl || !supabaseKey) {
-  console.error(
-    "Missing Supabase environment variables. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to your .env file."
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || defaultSupabaseUrl;
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || defaultSupabaseKey;
+
+if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+  console.warn(
+    "Using fallback Supabase values for the public GitHub Pages build. Add your own values in a local .env file for development."
   );
 }
 
-export const supabase = createClient(supabaseUrl || "", supabaseKey || "");
+export const supabase = createClient(supabaseUrl, supabaseKey);
